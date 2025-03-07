@@ -42,7 +42,7 @@ df = load_data()  # Call the function to get the cached data
 # Page Title & Sidebar
 st.title("Data Bank : binary classification project")
 st.sidebar.title("Table of contents")
-pages=["Introduction", "Exploration", "DataVizualization", "Modelling", "Conclusions"]
+pages=["Introduction", "Exploration", "Data Vizualization", "Modelling", "Conclusions"]
 page=st.sidebar.radio("Go to", pages)
 
 
@@ -67,10 +67,10 @@ if page == pages[0]:
 
     st.markdown("""
         The main objectives of the project consist of:
-    •	Performing exploratory data analysis to understand key Parameters
-    •	Identify key factors influencing customer decisions.
-    •	Preparing the dataset for modeling by cleaning and preprocessing.
-    •	Using machine learning models to predict customer subscription behavior
+    -   Performing exploratory data analysis to understand key Parameters
+    -   Identify key factors influencing customer decisions.
+    -   Preparing the dataset for modeling by cleaning and preprocessing.
+    -   Using machine learning models to predict customer subscription behavior
 
     """)
 
@@ -126,9 +126,9 @@ if page == pages[1] :
     st.markdown("""
         The dataset underwent the following preprocessing steps:
 
-        •	Handling Missing Values: Imputed or removed missing data to ensure completeness.
-        •	Encoding Categorical Variables: Used One-Hot Encoding and Label Encoding for categorical features.
-        •	Feature Scaling: Applied StandardScaler for numerical variables.
+        -   Handling Missing Values: Imputed or removed missing data to ensure completeness.
+        -	Encoding Categorical Variables: Used One-Hot Encoding and Label Encoding for categorical features.
+        -	Feature Scaling: Applied StandardScaler for numerical variables.
     """)
     if st.checkbox("Show NA") :
         st.dataframe(df.isna().sum())
@@ -162,23 +162,32 @@ if page == pages[2] :
         with tab1:
             st.markdown("### Personal Information")
             fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+        
+            # Deposit Outcome
             sns.countplot(x='y', data=df, ax=axes[0, 0])
             axes[0, 0].set_title("Deposit Outcome")
-
-            sns.countplot(x='job', data=df, ax=axes[0, 1])
+        
+            # Job type sorted in ascending order
+            job_order = df['job'].value_counts().index.tolist()  # Get job categories sorted by count
+            sns.countplot(x='job', data=df, ax=axes[0, 1], order=job_order)  # Add 'order' argument for sorting
             axes[0, 1].set_title("Type of Job")
             axes[0, 1].tick_params(axis='x', rotation=45)
-
+        
+            # Marital Status
             sns.countplot(x='marital', data=df, ax=axes[1, 0])
             axes[1, 0].set_title("Marital Status")
-
-            sns.countplot(x='education', data=df, ax=axes[1, 1])
+        
+            # Education sorted in ascending order
+            education_order = df['education'].value_counts().index.tolist()  # Get education categories sorted by count
+            sns.countplot(x='education', data=df, ax=axes[1, 1], order=education_order)  # Add 'order' argument for sorting
             axes[1, 1].set_title("Education")
             axes[1, 1].tick_params(axis='x', rotation=45)
-            #Correct Rotation and Alignment of X-axis labels
-            for ax in axes.flat:  
+        
+            # Correct Rotation and Alignment of X-axis labels
+            for ax in axes.flat:
                 ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
-            #Adjust tables:
+        
+            # Adjust tables:
             plt.tight_layout()
             st.pyplot(fig)
             st.markdown("""
