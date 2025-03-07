@@ -168,8 +168,8 @@ if page == pages[2] :
             axes[0, 0].set_title("Deposit Outcome")
         
             # Job type sorted in ascending order
-            job_order = df['job'].value_counts().index.tolist()  # Get job categories sorted by count
-            sns.countplot(x='job', data=df, ax=axes[0, 1], order=job_order)  # Add 'order' argument for sorting
+            job_order = df['job'].value_counts().index.tolist() 
+            sns.countplot(x='job', data=df, ax=axes[0, 1], order=job_order)  
             axes[0, 1].set_title("Type of Job")
             axes[0, 1].tick_params(axis='x', rotation=45)
         
@@ -178,8 +178,8 @@ if page == pages[2] :
             axes[1, 0].set_title("Marital Status")
         
             # Education sorted in ascending order
-            education_order = df['education'].value_counts().index.tolist()  # Get education categories sorted by count
-            sns.countplot(x='education', data=df, ax=axes[1, 1], order=education_order)  # Add 'order' argument for sorting
+            education_order = df['education'].value_counts().index.tolist()  
+            sns.countplot(x='education', data=df, ax=axes[1, 1], order=education_order)  
             axes[1, 1].set_title("Education")
             axes[1, 1].tick_params(axis='x', rotation=45)
         
