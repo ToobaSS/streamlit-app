@@ -802,7 +802,7 @@ if page == pages[3] :
 ##################### Feature Importance ############
     # Apply Random Over Sampler
     rOs = RandomOverSampler(random_state=42)
-    X_ro, y_ro = rUs.fit_resample(X_train, y_train)
+    X_ro, y_ro = rOs.fit_resample(X_train, y_train)
 
     # Train XGBOOST Model on Resampled Data
     bst = XGBClassifier(n_estimators=2, max_depth=2, learning_rate=1, objective='binary:logistic', random_state=42)
