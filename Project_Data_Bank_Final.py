@@ -66,12 +66,11 @@ if page == pages[0]:
     st.header("Objectives")
 
     st.markdown("""
-        The main objectives of the project consist of:
-    -   Performing exploratory data analysis to understand key Parameters
-    -   Identify key factors influencing customer decisions.
-    -   Preparing the dataset for modeling by cleaning and preprocessing.
-    -   Using machine learning models to predict customer subscription behavior
-
+    The main objectives of the project consist of:
+    - Performing exploratory data analysis to understand key parameters.
+    - Identifying key factors influencing customer decisions.
+    - Preparing the dataset for modeling by cleaning and preprocessing.
+    - Using machine learning models to predict customer subscription behavior.
     """)
 
 
@@ -126,7 +125,7 @@ if page == pages[1] :
     st.markdown("""
         The dataset underwent the following preprocessing steps:
 
-        -   Handling Missing Values: Imputed or removed missing data to ensure completeness.
+        -	Handling Missing Values: Imputed or removed missing data to ensure completeness.
         -	Encoding Categorical Variables: Used One-Hot Encoding and Label Encoding for categorical features.
         -	Feature Scaling: Applied StandardScaler for numerical variables.
     """)
@@ -160,33 +159,38 @@ if page == pages[2] :
         tab1, tab2, tab3 = st.tabs(["Personal Info", "Financial Info", "Marketing Info"])
 
         with tab1:
+
+            # Set theme for appealing visuals
+            sns.set_style("darkgrid")  
+            sns.set_palette("Set2")  
+
             st.markdown("### Personal Information")
             fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-        
+
             # Deposit Outcome
-            sns.countplot(x='y', data=df, ax=axes[0, 0])
-            axes[0, 0].set_title("Deposit Outcome")
-        
+            sns.countplot(x='y', data=df, ax=axes[0, 0], palette="coolwarm")
+            axes[0, 0].set_title("Deposit Outcome", )
+
             # Job type sorted in ascending order
-            job_order = df['job'].value_counts().index.tolist() 
-            sns.countplot(x='job', data=df, ax=axes[0, 1], order=job_order)  
+            job_order = df['job'].value_counts().index.tolist()  # Get job categories sorted by count
+            sns.countplot(x='job', data=df, ax=axes[0, 1], order=job_order, palette="viridis")  # Add 'order' argument for sorting
             axes[0, 1].set_title("Type of Job")
             axes[0, 1].tick_params(axis='x', rotation=45)
-        
+
             # Marital Status
-            sns.countplot(x='marital', data=df, ax=axes[1, 0])
+            sns.countplot(x='marital', data=df, ax=axes[1, 0], palette="husl")
             axes[1, 0].set_title("Marital Status")
-        
+
             # Education sorted in ascending order
-            education_order = df['education'].value_counts().index.tolist()  
-            sns.countplot(x='education', data=df, ax=axes[1, 1], order=education_order)  
+            education_order = df['education'].value_counts().index.tolist()  # Get education categories sorted by count
+            sns.countplot(x='education', data=df, ax=axes[1, 1], order=education_order, palette="magma")  # Add 'order' argument for sorting
             axes[1, 1].set_title("Education")
             axes[1, 1].tick_params(axis='x', rotation=45)
-        
+
             # Correct Rotation and Alignment of X-axis labels
             for ax in axes.flat:
                 ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
-        
+
             # Adjust tables:
             plt.tight_layout()
             st.pyplot(fig)
@@ -200,13 +204,13 @@ if page == pages[2] :
         with tab2:
             st.markdown("### Financial Information")
             fig, axes = plt.subplots(1, 3, figsize=(12, 4))
-            sns.countplot(x='default', data=df, ax=axes[0])
+            sns.countplot(x='default', data=df, ax=axes[0], palette="coolwarm")
             axes[0].set_title("Credit Default")
 
-            sns.countplot(x='housing', data=df, ax=axes[1])
+            sns.countplot(x='housing', data=df, ax=axes[1], palette="viridis")
             axes[1].set_title("Housing Loan")
 
-            sns.countplot(x='loan', data=df, ax=axes[2])
+            sns.countplot(x='loan', data=df, ax=axes[2], palette="magma")
             axes[2].set_title("Personal Loan")
             st.pyplot(fig)
             st.markdown("""
@@ -218,17 +222,17 @@ if page == pages[2] :
         with tab3:
             st.markdown("### Marketing Campaign Information")
             fig, axes = plt.subplots(2, 2, figsize=(12, 8))
-            sns.countplot(x='contact', data=df, ax=axes[0, 0])
+            sns.countplot(x='contact', data=df, ax=axes[0, 0], palette="viridis")
             axes[0, 0].set_title("Contact Type")
 
             month_order = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
-            sns.countplot(x='month', data=df, order=month_order, ax=axes[0, 1])
+            sns.countplot(x='month', data=df, order=month_order, ax=axes[0, 1], palette="magma")
             axes[0, 1].set_title("Last Contact Month")
 
-            sns.countplot(x='day_of_week', data=df, ax=axes[1, 0])
+            sns.countplot(x='day_of_week', data=df, ax=axes[1, 0], palette="husl")
             axes[1, 0].set_title("Last Contact Day")
 
-            sns.countplot(x='poutcome', data=df, ax=axes[1, 1])
+            sns.countplot(x='poutcome', data=df, ax=axes[1, 1], palette="viridis")
             axes[1, 1].set_title("Previous Campaign Outcome")
             #Adjust tables:
             plt.tight_layout() 
@@ -254,7 +258,7 @@ if page == pages[2] :
         df["age_group"] = pd.cut(df["age"], bins=bins, labels=labels, include_lowest=True)
         fig = plt.figure(figsize=(8, 4))  
     # Plot using age groups instead of individual ages
-        sns.countplot(x="age_group", data=df, order=labels)
+        sns.countplot(x="age_group", data=df, order=labels, palette = "Set3")
         plt.title("Distribution of Client's Age Groups")
         plt.xlabel("Age Group")
         plt.xticks(rotation=45, fontsize=12)  # Rotate labels for better readability
@@ -516,7 +520,7 @@ if page == pages[3] :
 
     # Function to apply highlighting to a specific row
     def highlight_row(s):
-        return ['background-color: gray' if s["Model"] == "DecisionTreeClassifier" else '' for _ in s]
+        return ['background-color: gray' if s["Model"] == "Logistic Regression" else '' for _ in s]
 
     # Display table with color highlight
     if st.checkbox("Precision Class-1"):
@@ -527,16 +531,17 @@ if page == pages[3] :
     
 ############ Imbalance ################
     st.write('## Fixing Imbalance')
-    choice = ['-', 'Random Over Sampler-DecisionTreeClassifier', 'Random Under Sampler-DecisionTreeClassifier', 'Mix Random Over & Under Sampler-DecisionTreeClassifier', 
+    choice = ['-', 'Random Over Sampler-logistic Regression', 'Random Under Sampler-Logistic Regression', 'Mix Random Over & Under Sampler-Logistic Regression', 
     'Random Over Sampler-XGBOOST', 'Random Under Sampler-XGBOOST', 'Mix Over- & Under- Sampler_XGBOOST-scale_pos_weight-max_delta_step']
     option = st.selectbox('Choice of the model', choice)
     st.write('The chosen model is:', option)
 
     if option == '-':
         st.write('-')
-    if option == 'Random Over Sampler-DecisionTreeClassifier':
+
+    if option == 'Random Over Sampler-logistic Regression':
         # Apply RandomOverSampler
-        st.write("## Random Over Sampler-DecisionTreeClassifier")
+        st.write("## Random Over Sampler-logistic Regression")
         rOs = RandomOverSampler(random_state=42)
         X_ro, y_ro = rOs.fit_resample(X_train, y_train)
 
@@ -545,17 +550,17 @@ if page == pages[3] :
         st.write("Oversampled sample classes:")
         st.dataframe(oversampled_distribution)
 
-        # Train DecisionTreeClassifier Model on Resampled Data
-        st.write("### Training DecisionTreeClassifier on Resampled Data")
-        dtc = DecisionTreeClassifier(max_depth=3, min_samples_leaf=25, random_state=42)
-        dtc.fit(X_ro, y_ro)
+        # Train Logistic Regression Model on Resampled Data
+        st.write("### Training Logistic Regression on Resampled Data")
+        lr = LogisticRegression(random_state=42)
+        lr.fit(X_ro, y_ro)
 
         # Display scores
-        st.write(f"**Score on train set:** {dtc.score(X_ro, y_ro):.2f}")
-        st.write(f"**Score on test set:** {dtc.score(X_test, y_test):.2f}")
+        st.write(f"**Score on train set:** {lr.score(X_ro, y_ro):.2f}")
+        st.write(f"**Score on test set:** {lr.score(X_test, y_test):.2f}")
 
         # Predictions
-        pred_ro = dtc.predict(X_test)
+        pred_ro = lr.predict(X_test)
 
         # Display Confusion Matrix
         st.write("### Confusion Matrix")
@@ -569,9 +574,9 @@ if page == pages[3] :
 
 
 
-    if option == 'Random Under Sampler-DecisionTreeClassifier':
-        # Apply RandomOverSampler
-        st.write("## Random Under Sampler-DecisionTreeClassifier")
+    if option == 'Random Under Sampler-Logistic Regression':
+        # Apply RandomUnderSampler
+        st.write("## Random Under Sampler-Logistic Regression")
         rUs = RandomUnderSampler(random_state=42)
         X_ru, y_ru = rUs.fit_resample(X_train, y_train)
 
@@ -580,17 +585,17 @@ if page == pages[3] :
         st.write("Undersampled sample classes:")
         st.dataframe(undersampled_distribution)
 
-        # Train DecisionTreeClassifier Model on Resampled Data
-        st.write("### Training DecisionTreeClassifier on Resampled Data")
-        dtc = DecisionTreeClassifier(max_depth=3, min_samples_leaf=25, random_state=42)
-        dtc.fit(X_ru, y_ru)
+        # Train Logistic Regression Model on Resampled Data
+        st.write("### Training Logistic Regression on Resampled Data")
+        lr = LogisticRegression(random_state=42)
+        lr.fit(X_ru, y_ru)
 
         # Display scores
-        st.write(f"**Score on train set:** {dtc.score(X_ru, y_ru):.2f}")
-        st.write(f"**Score on test set:** {dtc.score(X_test, y_test):.2f}")
+        st.write(f"**Score on train set:** {lr.score(X_ru, y_ru):.2f}")
+        st.write(f"**Score on test set:** {lr.score(X_test, y_test):.2f}")
 
         # Predictions
-        pred_ru = dtc.predict(X_test)
+        pred_ru = lr.predict(X_test)
 
         # Display Confusion Matrix
         st.write("### Confusion Matrix")
@@ -601,6 +606,56 @@ if page == pages[3] :
         report_dict = classification_report(y_test, pred_ru, output_dict=True)
         report_df = pd.DataFrame(report_dict).transpose()
         st.dataframe(report_df)
+
+
+
+
+    if option == 'Mix Random Over & Under Sampler-Logistic Regression':
+        # Apply Mix RandomSampler
+        st.write("## Mix Random Over & Under Sampler-Logistic Regression")
+
+        # Apply Random Over Sampler
+        st.write("### Step 1: Oversampling the Minority Class")
+        oversampler = RandomOverSampler(random_state=42)
+        X_oversampled, y_oversampled = oversampler.fit_resample(X_train, y_train)
+
+        # Display class distribution after oversampling
+        oversampled_distribution = pd.Series(y_oversampled).value_counts(normalize=True)
+        st.write("## Oversampled Sample Classes:")
+        st.dataframe(oversampled_distribution.to_frame(name="Proportion"))
+
+        # Apply Random Under Sampler
+        st.write("### Step 2: Undersampling the Majority Class")
+        undersampler = RandomUnderSampler()
+        X_resampled, y_resampled = undersampler.fit_resample(X_oversampled, y_oversampled)
+
+        # Display class distribution after undersampling
+        undersampled_distribution = pd.Series(y_resampled).value_counts(normalize=True)
+        st.write("Undersampled Sample Classes:")
+        st.dataframe(undersampled_distribution.to_frame(name="Proportion"))
+
+        # Train Logistic Regression Model on Resampled Data
+        st.write("### Training Logistic Regression  on Resampled Data")
+        lr = LogisticRegression (random_state=42)
+        lr.fit(X_resampled, y_resampled)
+
+        # Display scores
+        st.write(f"**Score on train set (mixed resampling):** {lr.score(X_resampled, y_resampled):.2f}")
+        st.write(f"**Score on test set (mixed resampling):** {lr.score(X_test, y_test):.2f}")
+
+        # Predictions
+        pred_resampled = lr.predict(X_test)
+
+        # Display Confusion Matrix
+        st.write("### Confusion Matrix")
+        st.dataframe(pd.crosstab(y_test, pred_resampled, rownames=['True'], colnames=['Prediction']))
+
+        # Display Classification Report
+        st.write("### Classification Report")
+        report_dict = classification_report(y_test, pred_resampled, output_dict=True)
+        report_df = pd.DataFrame(report_dict).transpose()
+        st.dataframe(report_df)
+
 
 
 
@@ -675,53 +730,6 @@ if page == pages[3] :
 
 
 
-    if option == 'Mix Random Over & Under Sampler-DecisionTreeClassifier':
-        # Apply Mix RandomSampler
-        st.write("## Mix Over & Under Sampler - DecisionTreeClassifier")
-
-        # Apply Random Over Sampler
-        st.write("### Step 1: Oversampling the Minority Class")
-        oversampler = RandomOverSampler(random_state=42)
-        X_oversampled, y_oversampled = oversampler.fit_resample(X_train, y_train)
-
-        # Display class distribution after oversampling
-        oversampled_distribution = pd.Series(y_oversampled).value_counts(normalize=True)
-        st.write("## Oversampled Sample Classes:")
-        st.dataframe(oversampled_distribution.to_frame(name="Proportion"))
-
-        # Apply Random Under Sampler
-        st.write("### Step 2: Undersampling the Majority Class")
-        undersampler = RandomUnderSampler()
-        X_resampled, y_resampled = undersampler.fit_resample(X_oversampled, y_oversampled)
-
-        # Display class distribution after undersampling
-        undersampled_distribution = pd.Series(y_resampled).value_counts(normalize=True)
-        st.write("Undersampled Sample Classes:")
-        st.dataframe(undersampled_distribution.to_frame(name="Proportion"))
-
-        # Train DecisionTreeClassifier Model on Resampled Data
-        st.write("### Training DecisionTreeClassifier on Resampled Data")
-        dtc = DecisionTreeClassifier(max_depth=3, min_samples_leaf=25, random_state=42)
-        dtc.fit(X_resampled, y_resampled)
-
-        # Display scores
-        st.write(f"**Score on train set (mixed resampling):** {dtc.score(X_resampled, y_resampled):.2f}")
-        st.write(f"**Score on test set (mixed resampling):** {dtc.score(X_test, y_test):.2f}")
-
-        # Predictions
-        pred_resampled = dtc.predict(X_test)
-
-        # Display Confusion Matrix
-        st.write("### Confusion Matrix")
-        st.dataframe(pd.crosstab(y_test, pred_resampled, rownames=['True'], colnames=['Prediction']))
-
-        # Display Classification Report
-        st.write("### Classification Report")
-        report_dict = classification_report(y_test, pred_resampled, output_dict=True)
-        report_df = pd.DataFrame(report_dict).transpose()
-        st.dataframe(report_df)
-
-
     if option == 'Mix Over- & Under- Sampler_XGBOOST-scale_pos_weight-max_delta_step':
         st.write("## Mix Over- & Under- Sampler with XGBOOST")
 
@@ -783,14 +791,14 @@ if page == pages[3] :
             "DecisionTreeClassifier",
             "Random Forest",
             "XGBOOST",
-            "Random Over Sampler - DecisionTreeClassifier",
-            "Random Under Sampler - DecisionTreeClassifier",
-            "Mix Random Over & Under Sampler - DecisionTreeClassifier",
+            "Random Over Sampler - Logistic Regression",
+            "Random Under Sampler - Logistic Regression",
+            "Mix Random Over & Under Sampler - Logistic Regression",
             "Random Over Sampler - XGBOOST",
             "Random Under Sampler - XGBOOST",
             "Mix Random Over & Under Sampler - XGBOOST - Scale"
         ],
-        "Precision Class 1": [0.6694, 0.6004, 0.6576, 0.6362, 0.3989, 0.4055, 0.3989, 0.3541, 0.376, 0.4805]
+        "Precision Class 1": [0.6694, 0.6004, 0.6576, 0.6362, 0.4387, 0.4388, 0.4387, 0.3541, 0.376, 0.4805]
     }
 
     # Convert to DataFrame
@@ -801,7 +809,7 @@ if page == pages[3] :
 
     # Function to apply highlighting to a specific row
     def highlight_row(s):
-        return ['background-color: gray' if s["Model"] == "Random Over Sampler - XGBOOST" else '' for _ in s]
+        return ['background-color: gray' if s["Model"] == "Logistic Regression" else '' for _ in s]
 
     # Display table with color highlight
     if st.checkbox("Precision Class 1"):
@@ -809,36 +817,48 @@ if page == pages[3] :
 
 
 ##################### Feature Importance ############
+    st.write('## Feature Importance')
+
     # Apply Random Over Sampler
     rOs = RandomOverSampler(random_state=42)
     X_ro, y_ro = rOs.fit_resample(X_train, y_train)
 
-    # Train XGBOOST Model on Resampled Data
-    bst = XGBClassifier(n_estimators=2, max_depth=2, learning_rate=1, objective='binary:logistic', random_state=42)
-    bst.fit(X_ro, y_ro)
+    # Train Logistic Regression Model on Resampled Data
+    lr = LogisticRegression(random_state=42)
+    lr.fit(X_ro, y_ro)
 
-    # Feature Importance
+    # Extract feature names and importance
+    feature_names = X_train.columns
+    feature_importance = lr.coef_[0]
+
+    # Keep only main variables (remove one-hot encoded features)
+    main_features = [name for name in feature_names if '_' not in name]  # Excludes one-hot encoded variables
+    filtered_importance = [imp for name, imp in zip(feature_names, feature_importance) if '_' not in name]
+
+    # Create DataFrame with filtered features
     feat_importance = pd.DataFrame({
-        'variables': bst.feature_names_in_,
-        'importance': bst.feature_importances_
+        'variables': main_features,
+        'importance': filtered_importance
     }).sort_values(by='importance', ascending=False)
 
     # Plotting Feature Importance
-    st.write("## Feature Importance Plot")
-    fig, ax = plt.subplots(figsize=(11, 5))
-    feat_importance.nlargest(4, 'importance').plot.bar(x='variables', y='importance', ax=ax, color='#4529de')
+    st.write("### Feature Importance Plot")
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.barplot(data=feat_importance.nlargest(4, 'importance'), x='variables', y='importance', ax=ax, palette='viridis')
+    ax.set_xlabel("Features")
+    ax.set_ylabel("Importance")
+    ax.set_title("Top 4 Feature Importance")
 
+    # Show the plot if the user checks the box
     if st.checkbox("Show Feature Importance Plot"):
         st.pyplot(fig)
-
     # Interpretation
     if st.checkbox("Show Interpretation"):
         st.write("""
-    The duration variable is the most important feature in the model, followed closely by the number of employees (nr.employed) and the 
-    employment variation rate (emp.var.rate). This indicates that both client interaction details and macroeconomic indicators significantly 
-    impact the likelihood of a client subscribing to a term deposit. Meanwhile, the age variable appears to have little to no influence on 
-    the model's predictions, suggesting that demographic factors like age may not be strong predictors compared to other economic and 
-    behavioral indicators.
+        The duration variable is the most important feature in the model, followed by the consumer price index and the 3-month Euribor 
+        rate. This indicates that both marketing and socioeconomic indicators significantly impact the likelihood of a client 
+        subscribing to a term deposit. Meanwhile, the number of employees (nr.employed) appears to have little influence on the model's 
+        predictions, suggesting that it may not be as strong a predictor compared to the other key indicators.
         """)
 
 
@@ -850,10 +870,12 @@ if page == pages[4]:
     
     st.markdown("""
     This study demonstrates the effectiveness of machine learning in predicting customer behavior in banking campaigns. The insights gained 
-    can be directly applied to enhance targeting strategies, optimize marketing budgets, and improve customer engagement.
-
-    Among the models tested, the XGBOOST combined with a Random Over Sampling outperformed others in precision, 
-    making it the most effective predictor of term deposit subscriptions.
+    can be directly applied to improve targeting strategies, optimize marketing budgets, and enhance customer engagement.
+    The Logistic Regression outperformed other models precision, making it the best predictor for term deposit subscriptions. Key findings 
+    include:
+    Duration of the last contact was the strongest predictor of subscription.
+    Higher contact frequency increased the likelihood of subscription.
+    Customer’s employment played a significant role in decision-making.
 
     Key findings include:
 
@@ -866,8 +888,8 @@ if page == pages[4]:
 
     st.markdown("""
     One of the most challenging aspects of this project was handling imbalanced data. The dataset contained significantly more 'no' than 'yes' 
-    responses, requiring techniques such as oversampling, undersampling, and a combination of both. These methods, particularly the mixed 
-    approach, improved the model's performance as anticipated.
+    responses, requiring techniques such as oversampling, undersampling, and a combination of both. However, these methods did not improve the 
+    model's performance as expected.
     """)
 
 
