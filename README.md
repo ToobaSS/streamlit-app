@@ -24,6 +24,11 @@ This project analyzes customer-level data from a bank marketing campaign to pred
 ## Demo
 👉 [Live Streamlit App](https://app-app-ee6kfvjxjadfghymbbzhes.streamlit.app/)
 
+
+## Screenshot
+Streamlit dashboard preview:
+![App Screenshot](Screenshot_streamlit.png)
+
 ## Key Takeaways
 - Demonstrates ability to work with structured customer data
 - Applies machine learning to a real business problem
