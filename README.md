@@ -27,7 +27,7 @@ This project analyzes customer-level data from a bank marketing campaign to pred
 
 ## Screenshot
 Streamlit dashboard preview:
-![App Screenshot](Screenshot_streamlit.png)
+![App Screenshot](Screenshot_Streamlit.png)
 
 ## Key Takeaways
 - Demonstrates ability to work with structured customer data
